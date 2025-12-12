@@ -66,6 +66,8 @@ function M.list_all_vars(req)
 		return {}
 	end
 
+	print("results: " .. vim.inspect(data))
+
 	local results = {}
 	for _, v in ipairs(data) do
 		table.insert(results, v.name)
