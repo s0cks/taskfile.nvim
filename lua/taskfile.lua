@@ -26,7 +26,7 @@ local default_config = {
 }
 
 ---@param opts? taskfile.Config
-M.setup = function(opts)
+M.config = function(opts)
 	opts = vim.tbl_deep_extend("force", default_config, opts)
 	add_filetype_for_filenames("yaml.taskfile", {
 		"Taskfile.yaml",
