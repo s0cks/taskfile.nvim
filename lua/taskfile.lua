@@ -67,8 +67,8 @@ function M.list_all_vars(req)
 	end
 
 	local results = {}
-	for _, task in ipairs(data) do
-		table.insert(results, task.task.value)
+	for _, v in ipairs(data) do
+		table.insert(results, v.name)
 	end
 	return results
 end
