@@ -42,4 +42,29 @@ function M.list_all(req)
 	return results
 end
 
+function M.list_all_vars(req)
+	local lsp = require("taskfile.lsp")
+	local client = lsp.find_taskfile_client()
+
+	if not client then
+		print("failed to find taskfile LSP client")
+		return {}
+	end
+
+	local data, error = lsp.get_vars_request_sync(client, req)
+	if error then
+		print("LSP error: " .. vim.inspect(error))
+		return {}
+	elseif not data then
+		print("LSP returned empty response")
+		return {}
+	end
+
+	local results = {}
+	for _, task in ipairs(data) do
+		table.insert(results, task.task.value)
+	end
+	return results
+end
+
 return M

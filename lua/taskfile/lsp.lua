@@ -56,4 +56,28 @@ function M.get_tasks_request_sync(client, req)
 	return data.result, nil
 end
 
+---@param client vim.lsp.Client The client to make the request w/
+---@param req? taskfile.lsp.GetTasksRequest The request to make
+function M.get_vars_request_sync(client, req)
+	req = vim.tbl_deep_extend("force", default_get_tasks_request, req or {})
+	if not req.fsPath then
+		req.fsPath = vim.fn.expand("%p")
+	end
+	local data, error = client:request_sync("extension/getVars", req)
+	if error then
+		---TODO(@s0cks): probaby should log this, client side error
+		---print("LSP client error: " .. vim.inspect(error))
+		return nil, error
+	elseif not data then
+		---TODO(@s0cks): probably should also log this, LSP returned empty response
+		---print("LSP no data returned")
+		return {}, nil
+	elseif data.err then
+		---TODO(@s0cks): probably should log this, LSP responded w/ an error
+		---print("LSP responded w/ error: " .. vim.inspect(data.err))
+		return nil, data.err
+	end
+	return data.result, nil
+end
+
 return M
