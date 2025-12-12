@@ -12,6 +12,12 @@ M.setup = function(opts)
 			print(" - " .. task)
 		end
 	end, {})
+	vim.api.nvim_create_user_command("TaskfileListVars", function()
+		print("listing taskfile vars....")
+		for _, v in ipairs(M.list_all_vars()) do
+			print(" - " .. vim.inspect(v))
+		end
+	end, {})
 end
 
 ---Query the lsp client for a list of available tasks to run
