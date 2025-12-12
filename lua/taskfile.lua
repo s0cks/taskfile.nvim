@@ -13,7 +13,7 @@ local function add_filetype_for_filenames(ft, filenames)
 end
 
 ---@class taskfile.Config : vim.lsp.Config
-local default_config = {
+M.config = {
 	cmd = {
 		"taskfile-language-server",
 	},
@@ -27,20 +27,20 @@ local default_config = {
 
 ---@param opts? taskfile.Config
 M.setup = function(opts)
-	opts = vim.tbl_deep_extend("force", default_config, opts)
+	M.config = vim.tbl_deep_extend("force", M.config, opts)
 	add_filetype_for_filenames("yaml.taskfile", {
 		"Taskfile.yaml",
 		"Taskfile.yml",
 	})
 	vim.lsp.config("taskfile", {
-		cmd = opts.cmd,
-		root_markers = opts.root_markers,
-		filetypes = opts.filetypes,
+		cmd = M.config.cmd,
+		root_markers = M.config.root_markers,
+		filetypes = M.config.filetypes,
 		on_attach = function(client, bufnr)
 			vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 			vim.notify("taskfile-language-server attached", vim.log.levels.INFO)
-			if opts.on_attach then
-				opts.on_attach(client, bufnr)
+			if M.config.on_attach then
+				M.config.on_attach(client, bufnr)
 			end
 		end,
 	})
