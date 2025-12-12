@@ -1,78 +1,50 @@
----@class Config
-local default_config = {}
-
 local M = {}
-M.config = default_config
 
+---@param ft string The filetype
+---@param filenames table<string> The list of files
+local function add_filetype_for_filenames(ft, filenames)
+	local filename = {}
+	for _, f in ipairs(filenames) do
+		filename[f] = ft
+	end
+	vim.filetype.add({
+		filename = filename,
+	})
+end
+
+---@class taskfile.Config : vim.lsp.Config
+local default_config = {
+	cmd = {
+		"taskfile-language-server",
+	},
+	filetypes = {
+		"yaml.taskfile",
+	},
+	root_markers = {
+		".git",
+	},
+}
+
+---@param opts? taskfile.Config
 M.setup = function(opts)
-	M.config = vim.tbl_deep_extend("force", M.config, opts or {})
-	vim.api.nvim_create_user_command("ListTasks", function()
-		print("listing tasks....")
-		for _, task in ipairs(M.list_all()) do
-			print(" - " .. task)
-		end
-	end, {})
-	vim.api.nvim_create_user_command("TaskfileListVars", function()
-		print("listing taskfile vars....")
-		for _, v in ipairs(M.list_all_vars()) do
-			print(" - " .. vim.inspect(v))
-		end
-	end, {})
-end
-
----Query the lsp client for a list of available tasks to run
----@param req? taskfile.lsp.GetTasksRequest
----@return table
-function M.list_all(req)
-	local lsp = require("taskfile.lsp")
-	local client = lsp.find_taskfile_client()
-
-	if not client then
-		print("failed to find taskfile LSP client")
-		return {}
-	end
-
-	local data, error = lsp.get_tasks_request_sync(client, req)
-	if error then
-		print("LSP error: " .. vim.inspect(error))
-		return {}
-	elseif not data then
-		print("LSP returned empty response")
-		return {}
-	end
-
-	local results = {}
-	for _, task in ipairs(data) do
-		table.insert(results, task.task.value)
-	end
-	return results
-end
-
-function M.list_all_vars(req)
-	local lsp = require("taskfile.lsp")
-	local client = lsp.find_taskfile_client()
-
-	if not client then
-		print("failed to find taskfile LSP client")
-		return {}
-	end
-
-	local data, error = lsp.get_vars_request_sync(client, req)
-	if error then
-		print("LSP error: " .. vim.inspect(error))
-		return {}
-	elseif not data then
-		print("LSP returned empty response")
-		return {}
-	end
-
-	print("results: " .. vim.inspect(data))
-
-	local results = {}
-	for _, v in ipairs(data) do
-		table.insert(results, v.name)
-	end
-	return results
+	opts = vim.tbl_deep_extend("force", default_config, opts)
+	add_filetype_for_filenames("yaml.taskfile", {
+		"Taskfile.yaml",
+		"Taskfile.yml",
+	})
+	vim.lsp.config("taskfile", {
+		cmd = opts.cmd,
+		root_markers = opts.root_markers,
+		filetypes = opts.filetypes,
+		on_attach = function(client, bufnr)
+			vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+			vim.notify("taskfile-language-server attached", vim.log.levels.INFO)
+			if opts.on_attach then
+				opts.on_attach(client, bufnr)
+			end
+		end,
+	})
+	vim.lsp.enable("taskfile")
 end
 
 return M

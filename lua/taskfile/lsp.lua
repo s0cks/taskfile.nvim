@@ -11,7 +11,7 @@ local default_find_taskfile_client_opts = {
 ---@param opts? taskfile.find_taskfile_client_opts
 ---@return vim.lsp.Client|nil
 function M.find_taskfile_client(opts)
-	opts = vim.tbl_deep_extend("force", default_find_taskfile_client_opts, opts or {})
+	opts = vim.tbl_deep_extend("force", default_find_taskfile_client_opts, opts)
 	local clients = vim.lsp.get_clients({ bufnr = opts.bufnr })
 
 	if #clients == 0 then
@@ -35,7 +35,7 @@ local default_get_tasks_request = {}
 ---@param client vim.lsp.Client The client to make the request w/
 ---@param req? taskfile.lsp.GetTasksRequest The request to make
 function M.get_tasks_request_sync(client, req)
-	req = vim.tbl_deep_extend("force", default_get_tasks_request, req or {})
+	req = vim.tbl_deep_extend("force", default_get_tasks_request, req)
 	if not req.fsPath then
 		req.fsPath = vim.fn.expand("%p")
 	end
@@ -59,7 +59,7 @@ end
 ---@param client vim.lsp.Client The client to make the request w/
 ---@param req? taskfile.lsp.GetTasksRequest The request to make
 function M.get_vars_request_sync(client, req)
-	req = vim.tbl_deep_extend("force", default_get_tasks_request, req or {})
+	req = vim.tbl_deep_extend("force", default_get_tasks_request, req)
 	if not req.fsPath then
 		req.fsPath = vim.fn.expand("%p")
 	end
