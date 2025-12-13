@@ -33,7 +33,4 @@ The task picker allows you to fuzzy-find a task and run it using Snacks.
 require('taskfile.picker').task_picker()
 ```
 
-<details>
-  <summary>Example</summary>
-  [![asciicast](https://asciinema.org/a/fefth2yu4lu9SdvWK5to6dlu2.svg)](https://asciinema.org/a/fefth2yu4lu9SdvWK5to6dlu2)
-</details>
+  [![Example](https://asciinema.org/a/fefth2yu4lu9SdvWK5to6dlu2.svg)](https://asciinema.org/a/fefth2yu4lu9SdvWK5to6dlu2)
