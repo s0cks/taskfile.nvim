@@ -82,6 +82,8 @@ You can get a list of tasks from the Taskfile:
 local tasks = require('taskfile').list_tasks()
 ```
 
+---
+
 ```lua
 --- List the available tasks
 ---@return taskfile.Task[]
@@ -100,6 +102,8 @@ taskfile.select_task(tasks, function(task)
 end)
 ```
 
+---
+
 ```lua
 --- Open a select prompt for a list of tasks
 ---@param tasks taskfile.Task[] The tasks to select from
@@ -115,6 +119,8 @@ You can start a job for a task by doing:
 ```lua
 require('taskfile').start_task_job('default')
 ```
+
+---
 
 ```lua
 --- Start a job running the task
