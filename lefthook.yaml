@@ -1,0 +1,14 @@
+---
+commit-msg:
+  commands:
+    conventional-commits:
+      run: cog verify --file {1}
+pre-commit:
+  commands:
+    yaml-format:
+      glob: "*.{yaml,yml}"
+      run: yamlfmt {staged_files}
+      stage_fixed: true
+    gitleaks:
+      glob: "*"
+      run: gitleaks protect --staged --verbose
