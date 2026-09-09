@@ -2,6 +2,8 @@
 
 Neovim plugin for working w/ [Taskfiles](https://taskfile.dev/)
 
+![Example](./assets/example.gif)
+
 ## Installation
 
 <details>
@@ -11,9 +13,7 @@ Neovim plugin for working w/ [Taskfiles](https://taskfile.dev/)
   {
     's0cks/taskfile.nvim',
     version = '*',
-    dependencies = {
-      'folke/snacks.nvim',
-    },
+    dependencies = { },
     opts = {},
   }
   ```
@@ -22,15 +22,8 @@ Neovim plugin for working w/ [Taskfiles](https://taskfile.dev/)
 
 ### Dependencies
 
-- [Snacks](https://github.com/folke/snacks.nvim)
-- [taskfile-language-server](https://github.com/s0cks/taskfile-language-server)
+- [taskfile-lsp](https://github.com/s0cks/task-lsp)
 
-## Task Picker
+## License
 
-The task picker allows you to fuzzy-find a task and run it using Snacks.
-
-```lua
-require('taskfile.picker').task_picker()
-```
-
-  [![Example](https://asciinema.org/a/fefth2yu4lu9SdvWK5to6dlu2.svg)](https://asciinema.org/a/fefth2yu4lu9SdvWK5to6dlu2)
+See [LICENSE](/LICENSE)
