@@ -1,7 +1,7 @@
 local util = require("taskfile.util")
 
 local M = {}
-local version = "2.0.0"
+local version = "2.0.0" -- x-release-please-version
 
 ---@type taskfile.Opts
 M.config = {}
