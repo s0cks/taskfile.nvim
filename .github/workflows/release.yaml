@@ -10,6 +10,10 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
     steps:
     - uses: googleapis/release-please-action@v4
       with:
