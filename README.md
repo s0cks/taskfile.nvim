@@ -60,6 +60,22 @@ Here is the default config:
 
 - [taskfile-lsp](https://github.com/s0cks/task-lsp) --- A language-server (LSP) for working w/ Taskfiles `Optional / Highly Recommended`
 
+## Commands
+
+This plugin creates the following commands:
+
+| Command | Description                                     |
+|--------:|:------------------------------------------------|
+| `:Task` | Spawn `vim.ui.select` and run the selected task |
+
+## Filetypes
+
+This plugin creates the following filetypes:
+
+|        Filetype |                 Source                 | Description                                          |
+|----------------:|:--------------------------------------:|:-----------------------------------------------------|
+| `yaml.taskfile` | Filenames:<br/>- `Taskfile.{yaml,yml}` | A filetype for taskfiles w/ YAML filetype combinator |
+
 ## API
 
 ```lua
