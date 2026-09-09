@@ -8,6 +8,7 @@ A [Neovim](https://neovim.io/) plugin for working w/ [Taskfiles](https://taskfil
 
 <details>
   <summary>vim.pack</summary>
+  <br/>
 
   > **Requires Neovim v0.12+**
 
@@ -26,20 +27,24 @@ A [Neovim](https://neovim.io/) plugin for working w/ [Taskfiles](https://taskfil
   })
   ```
 
+  <br/>
 </details>
 
 <details>
   <summary>Lazy</summary>
+  <br/>
 
   ```lua
   {
     's0cks/taskfile.nvim',
-    version = '*',
-    dependencies = { },
     opts = {},
+    config = function(_, opts)
+      require('taskfile').setup(opts)
+    end,
   }
   ```
 
+  <br/>
 </details>
 
 ### Default Config
